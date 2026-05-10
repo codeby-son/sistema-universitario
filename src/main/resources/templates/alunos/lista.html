@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Alunos</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.08);
+        }
+
+        h1, h2 {
+            color: #1f2937;
+        }
+
+        .card {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            text-align: left;
+        }
+
+        .resultado {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .erro {
+            background: #fef2f2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Cadastro de Alunos</h1>
+
+<div th:if="${mensagemErro != null}" class="erro" th:text="${mensagemErro}"></div>
+
+    <!-- PRIMEIRA PARTE -->
+    <div class="card">
+        <h2>Novo Aluno</h2>
+
+        <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
+
+            <label>Nome:</label><br>
+            <input type="text" th:field="*{nome}" required><br>
+
+            <label>Endereço:</label><br>
+            <input type="text" th:field="*{endereco}" required><br>
+
+            <label>Matrícula:</label><br>
+            <input type="text" th:field="*{matricula}" required><br>
+
+            <label>Data de ingresso:</label><br>
+            <input type="date" th:field="*{dataIngresso}" required><br>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- SEGUNDA PARTE -->
+    <div class="card">
+        <h2>Buscar Aluno por Matrícula</h2>
+
+        <form th:action="@{/alunos/buscar}" method="get">
+            <label>Matrícula:</label><br>
+            <input type="text" name="matricula" required><br>
+            <button type="submit">Buscar</button>
+        </form>
+
+        <div th:if="${alunoEncontrado != null}" class="resultado">
+            <h3>Aluno encontrado:</h3>
+            <p><strong>Nome:</strong> <span th:text="${alunoEncontrado.nome}"></span></p>
+            <p><strong>Endereço:</strong> <span th:text="${alunoEncontrado.endereco}"></span></p>
+            <p><strong>Matrícula:</strong> <span th:text="${alunoEncontrado.matricula}"></span></p>
+            <p><strong>Data de ingresso:</strong> <span th:text="${alunoEncontrado.dataIngresso}"></span></p>
+        </div>
+
+        <div th:if="${alunoEncontrado == null and param.matricula != null}" class="erro">
+            Aluno não encontrado.
+        </div>
+    </div>
+
+    <!-- TERCEIRA PARTE -->
+    <div class="card">
+        <h2>Lista de Alunos</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Matrícula</th>
+                <th>Data Ingresso</th>
+            </tr>
+
+            <tr th:each="alunoItem : ${alunos}">
+                <td th:text="${alunoItem.id}"></td>
+                <td th:text="${alunoItem.nome}"></td>
+                <td th:text="${alunoItem.endereco}"></td>
+                <td th:text="${alunoItem.matricula}"></td>
+                <td th:text="${alunoItem.dataIngresso}"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
