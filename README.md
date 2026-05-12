@@ -65,7 +65,7 @@ spring.jpa.show-sql=true
 # Como Executar o Projeto
 
 ## 1. Clonar o repositório
-git clone https://github.com/seu-usuario/sistema-universitario-springboot.git
+git clone https://github.com/seu-usuario/sistema-universitario.git
 
 ## 2. Abrir no Eclipse
 Importe o projeto como:
