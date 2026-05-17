@@ -27,6 +27,7 @@ Projeto acadêmico desenvolvido com Spring Boot, Thymeleaf e PostgreSQL para ger
 ### Matérias
 - Cadastro de matérias
 - Consulta de matérias
+- Listagem de matérias
 
 ### Turmas
 - Cadastro de turmas
@@ -49,6 +50,10 @@ src/main/java/com/example/demo
 ├── repository
 └── service
 ```
+
+### Módulos implementados
+- Alunos
+- Matérias
 
 # Banco de Dados
 
@@ -88,4 +93,8 @@ Rodar a classe:
 - /alunos
 - /alunos/salvar
 - /alunos/buscar
+- Matérias
+- /materias
+- /materias/salvar
+- /materias/buscar
 
