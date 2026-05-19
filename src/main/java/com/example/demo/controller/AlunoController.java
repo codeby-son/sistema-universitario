@@ -49,4 +49,14 @@ public class AlunoController {
 		return "alunos/lista";
 	}
 	
+	@PostMapping("/alunos/adicionar-materia")
+	public String adicionarMateria(
+	        @RequestParam String matricula,
+	        @RequestParam String codigoMateria) {
+
+	    alunoService.adicionarMateria(matricula, codigoMateria);
+
+	    return "redirect:/alunos";
+	}
+
 }

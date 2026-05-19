@@ -1,6 +1,12 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,6 +77,22 @@ public class Aluno {
 	
 	public void setDataIngresso(LocalDate dataIngresso) {
 		this.dataIngresso = dataIngresso;
+	}
+	
+	@ManyToMany
+	@JoinTable(
+	    name = "aluno_materias",
+	    joinColumns = @JoinColumn(name = "aluno_id"),
+	    inverseJoinColumns = @JoinColumn(name = "materia_id")
+	)
+	private List<Materia> materias = new ArrayList<>();
+
+	public List<Materia> getMaterias() {
+	    return materias;
+	}
+
+	public void setMaterias(List<Materia> materias) {
+	    this.materias = materias;
 	}
 	
 }

@@ -145,12 +145,38 @@
             <p><strong>Endereço:</strong> <span th:text="${alunoEncontrado.endereco}"></span></p>
             <p><strong>Matrícula:</strong> <span th:text="${alunoEncontrado.matricula}"></span></p>
             <p><strong>Data de ingresso:</strong> <span th:text="${alunoEncontrado.dataIngresso}"></span></p>
+            <h3>Matérias Matriculadas</h3>
+    			<ul>
+        			<li th:each="materia : ${alunoEncontrado.materias}">
+           			 <span th:text="${materia.nome}"></span>
+       				</li>
+    			</ul>
         </div>
 
         <div th:if="${alunoEncontrado == null and param.matricula != null}" class="erro">
             Aluno não encontrado.
         </div>
     </div>
+
+
+<!-- NOVA PARTE -->
+<div class="card">
+
+    <h2>Adicionar Matéria ao Aluno</h2>
+
+    <form th:action="@{/alunos/adicionar-materia}" method="post">
+
+        <label>Matrícula do aluno:</label><br>
+        <input type="text" name="matricula" required><br>
+
+        <label>Código da matéria:</label><br>
+        <input type="text" name="codigoMateria" required><br>
+
+        <button type="submit">Adicionar</button>
+
+    </form>
+
+</div>
 
     <!-- TERCEIRA PARTE -->
     <div class="card">
