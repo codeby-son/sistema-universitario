@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Matrículas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.08);
+        }
+
+        h1, h2 {
+            color: #1f2937;
+        }
+
+        .card {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            display: block;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Gerenciar Matrículas e Notas</h1>
+
+    <p><a th:href="@{/alunos}">Ir para Alunos</a> | <a th:href="@{/materias}">Ir para Matérias</a></p>
+
+    <div class="card">
+        <h2>Nova Matrícula e Lançamento de Notas</h2>
+
+        <form th:action="@{/matriculas/salvar}" th:object="${matricula}" method="post">
+            
+            <label>Aluno:</label>
+            <select th:field="*{aluno}" required>
+                <option value="">Selecione um aluno</option>
+                <option th:each="a : ${alunos}" th:value="${a.id}" th:text="${a.nome}"></option>
+            </select>
+            
+            <label>Turma:</label>
+            <select th:field="*{turma}" required>
+                <option value="">Selecione a turma</option>
+                <option th:each="t : ${turmas}" th:value="${t.id}" th:text="${t.codigo}"></option>
+            </select>
+            
+            <label>Nota 1:</label>
+            <input type="number" step="0.01" th:field="*{nota1}" />
+            
+            <label>Nota 2:</label>
+            <input type="number" step="0.01" th:field="*{nota2}" />
+            
+            <label>Nota 3:</label>
+            <input type="number" step="0.01" th:field="*{nota3}" />
+            
+            <button type="submit">Salvar Matrícula</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Lista de Matrículas e Histórico de Notas</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Aluno</th>
+                <th>Turma</th>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Nota 3</th>
+                <th>Média</th>
+                <th>Status</th>
+            </tr>
+
+            <tr th:each="m : ${matriculas}">
+                <td th:text="${m.id}"></td>
+                <td th:text="${m.aluno != null ? m.aluno.nome : ''}"></td>
+                <td th:text="${m.turma != null ? m.turma.codigo : ''}"></td>
+                <td th:text="${m.nota1}"></td>
+                <td th:text="${m.nota2}"></td>
+                <td th:text="${m.nota3}"></td>
+                <td th:text="${m.media}"></td>
+                <td th:text="${m.aprovado ? 'Aprovado' : 'Reprovado'}"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Aluno;
 import com.example.demo.service.AlunoService;
+import com.example.demo.service.MatriculaService;
 
 @Controller
 public class AlunoController {
 
 	@Autowired
 	private AlunoService alunoService;
+	
+	@Autowired
+	private MatriculaService matriculaService;
 	
 	@GetMapping("/alunos")
 	public String paginaAlunos(Model model) {
@@ -42,9 +46,15 @@ public class AlunoController {
 	
 	@GetMapping("/alunos/buscar")
 	public String buscarAluno(@RequestParam String matricula, Model model) {
+		Aluno alunoEncontrado = alunoService.buscarPorMatricula(matricula);
 		model.addAttribute("aluno", new Aluno());
 		model.addAttribute("alunos", alunoService.listarTodos());
-		model.addAttribute("alunoEncontrado", alunoService.buscarPorMatricula(matricula));
+		model.addAttribute("alunoEncontrado", alunoEncontrado);
+		
+		if (alunoEncontrado != null) {
+			model.addAttribute("matriculas", matriculaService.listarPorAluno(alunoEncontrado));
+		}
+		
 		model.addAttribute("mensagemErro", null);
 		return "alunos/lista";
 	}

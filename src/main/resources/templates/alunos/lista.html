@@ -145,12 +145,36 @@
             <p><strong>Endereço:</strong> <span th:text="${alunoEncontrado.endereco}"></span></p>
             <p><strong>Matrícula:</strong> <span th:text="${alunoEncontrado.matricula}"></span></p>
             <p><strong>Data de ingresso:</strong> <span th:text="${alunoEncontrado.dataIngresso}"></span></p>
+
             <h3>Matérias Matriculadas</h3>
-    			<ul>
-        			<li th:each="materia : ${alunoEncontrado.materias}">
-           			 <span th:text="${materia.nome}"></span>
-       				</li>
-    			</ul>
+            <ul>
+                <li th:each="materia : ${alunoEncontrado.materias}">
+                    <span th:text="${materia.nome}"></span>
+                </li>
+            </ul>
+
+            <h3>Histórico de Notas e Aprovação</h3>
+            <div th:if="${matriculas != null and !matriculas.isEmpty()}">
+                <table>
+                    <tr>
+                        <th>Turma</th>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Nota 3</th>
+                        <th>Média</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr th:each="m : ${matriculas}">
+                        <td th:text="${m.turma != null ? m.turma.codigo : ''}"></td>
+                        <td th:text="${m.nota1}"></td>
+                        <td th:text="${m.nota2}"></td>
+                        <td th:text="${m.nota3}"></td>
+                        <td th:text="${m.media}"></td>
+                        <td th:text="${m.aprovado ? 'Aprovado' : 'Reprovado'}"></td>
+                    </tr>
+                </table>
+            </div>
+            <p th:if="${matriculas == null or matriculas.isEmpty()}">Nenhuma matrícula encontrada.</p>
         </div>
 
         <div th:if="${alunoEncontrado == null and param.matricula != null}" class="erro">
